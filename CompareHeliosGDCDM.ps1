@@ -7,15 +7,15 @@ $sqlSchema = "dbo"
 # Snowflake
 $dsn = "Helios_SF"
 $snowflakeUser = "s_D365"
-$snowflakePassword = "H3lpful1nt3gr@t3"
+$snowflakePassword = "Hahahahahahahahahahah"
 $snowflakeSchema = "PUBLIC"
 $snowflakeDatabase = "HELIOS"
 
 # Email Settings
-$smtpServer = "smtp.yanceybros.com"      
-$from = "noreply@yanceybros.com"            
-$to = "kevin_wilkie@yanceybros.com"              
-$subject = "Helios Snowflake vs COREAG Row Count Comparison Report"
+$smtpServer = "smtp.nope.com"      
+$from = "noreply@nope.com"            
+$to = "kevin_wilkie@nope.com"              
+$subject = "Snowflake vs SQL Server Row Count Comparison Report"
 $body = "Attached is the latest RowCountComparison.csv report."
 $attachment = ".\RowCountComparison.csv"
 
@@ -65,7 +65,7 @@ $sqlConn.Close()
 # --- Snowflake Row Counts ---
 Write-Host "`nGathering Snowflake row counts..." -ForegroundColor Cyan
 $snowflakeConn = New-Object System.Data.Odbc.OdbcConnection
-$snowflakeConn.ConnectionString = "Driver={SnowflakeDSIIDriver};Server=qya08643.east-us-2.azure.snowflakecomputing.com;UID=$snowflakeUser;PWD=$snowflakePassword;Warehouse=HELIOS_WH;Database=$snowflakeDatabase;Schema=$snowflakeSchema"
+$snowflakeConn.ConnectionString = "Driver={SnowflakeDSIIDriver};Server=nope.east-us-2.azure.snowflakecomputing.com;UID=$snowflakeUser;PWD=$snowflakePassword;Warehouse=BIG_WH;Database=$snowflakeDatabase;Schema=$snowflakeSchema"
 $snowflakeConn.Open()
 
 $schemaCmd = $snowflakeConn.CreateCommand()
@@ -170,16 +170,17 @@ function Build-HtmlTable ($title, $rows) {
 }
 
 # --- Send Summary Email (always) ---
-$summaryHtml = Build-HtmlTable "Helios Snowflake vs COREAG - Full Comparison" $allResults
-$summarySubject = "Helios Row Count Summary - $(Get-Date -Format 'yyyy-MM-dd HH:mm')"
+$summaryHtml = Build-HtmlTable "Craziness" $allResults
+$summarySubject = "Row Count Summary - $(Get-Date -Format 'yyyy-MM-dd HH:mm')"
 Send-MailMessage -From $from -To $to -Subject $summarySubject -Body $summaryHtml -BodyAsHtml -SmtpServer $smtpServer
 
 # --- Send Mismatch Email (only if needed) ---
 if ($mismatches.Count -gt 0) {
     Write-Host "`nDifferences found! Sending mismatch alert..." -ForegroundColor Yellow
-    $mismatchHtml = Build-HtmlTable "❗ Helios Snowflake vs COREAG - Row Count Mismatch" $mismatches
+    $mismatchHtml = Build-HtmlTable " Snowflake vs SQL Server - Row Count Mismatch" $mismatches
     $alertSubject = "ALERT: Row Count Mismatch Detected - $(Get-Date -Format 'yyyy-MM-dd HH:mm')"
     Send-MailMessage -From $from -To $to -Subject $alertSubject -Body $mismatchHtml -BodyAsHtml -SmtpServer $smtpServer
 } else {
     Write-Host "`nNo mismatches found. All counts aligned." -ForegroundColor Green
+
 }
