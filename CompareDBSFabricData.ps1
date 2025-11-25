@@ -6,14 +6,14 @@ $sqlSchema = "dbs"
 
 # Snowflake
 $snowflakeUser = "s_D365"
-$snowflakePassword = "H3lpful1nt3gr@t3"
+$snowflakePassword = "Hahahahahahahahahaha"
 $snowflakeSchema = "DBS"
 $snowflakeDatabase = "D365"
 
 # Email Settings
-$smtpServer = "smtp.yanceybros.com"      
-$from = "noreply@yanceybros.com"            
-$to = "kevin_wilkie@yanceybros.com"
+$smtpServer = "smtp.nope.com"      
+$from = "noreply@nope.com"            
+$to = "kevin_wilkie@nope.com"
 
 # --- SQL Server Row Count Collection (includes views) ---
 Write-Host "`nGathering SQL Server row counts (tables + views)..." -ForegroundColor Cyan
@@ -54,7 +54,7 @@ $sqlConn.Close()
 # --- Snowflake Row Counts ---
 Write-Host "`nGathering Snowflake row counts..." -ForegroundColor Cyan
 $snowflakeConn = New-Object System.Data.Odbc.OdbcConnection
-$snowflakeConn.ConnectionString = "Driver={SnowflakeDSIIDriver};Server=qya08643.east-us-2.azure.snowflakecomputing.com;UID=$snowflakeUser;PWD=$snowflakePassword;Warehouse=HELIOS_WH;Database=$snowflakeDatabase;Schema=$snowflakeSchema"
+$snowflakeConn.ConnectionString = "Driver={SnowflakeDSIIDriver};Server=qya08643.east-us-2.azure.snowflakecomputing.com;UID=$snowflakeUser;PWD=$snowflakePassword;Warehouse=BIG_WH;Database=$snowflakeDatabase;Schema=$snowflakeSchema"
 $snowflakeConn.Open()
 
 $schemaCmd = $snowflakeConn.CreateCommand()
@@ -168,16 +168,17 @@ function Build-HtmlTable ($title, $rows) {
 }
 
 # --- Send Summary Email (always) ---
-$summaryHtml = Build-HtmlTable "DBS Snowflake vs SQL3 - Full Comparison" $allResults
-$summarySubject = "DBS Row Count Summary - $(Get-Date -Format 'yyyy-MM-dd HH:mm')"
+$summaryHtml = Build-HtmlTable "Snowflake vs SQL Server - Full Comparison" $allResults
+$summarySubject = "Row Count Summary - $(Get-Date -Format 'yyyy-MM-dd HH:mm')"
 Send-MailMessage -From $from -To $to -Subject $summarySubject -Body $summaryHtml -BodyAsHtml -SmtpServer $smtpServer
 
 # --- Send Mismatch Email (only if needed) ---
 if ($mismatches.Count -gt 0) {
     Write-Host "Differences found! Sending mismatch alert..." -ForegroundColor Yellow
-    $mismatchHtml = Build-HtmlTable "DBS Snowflake vs SQL3 - Row Count Mismatch" $mismatches
+    $mismatchHtml = Build-HtmlTable "Snowflake vs SQL Server - Row Count Mismatch" $mismatches
     $alertSubject = "ALERT: Row Count Mismatch Detected - $(Get-Date -Format 'yyyy-MM-dd HH:mm')"
     Send-MailMessage -From $from -To $to -Subject $alertSubject -Body $mismatchHtml -BodyAsHtml -SmtpServer $smtpServer
 } else {
     Write-Host "No mismatches found. All counts aligned." -ForegroundColor Green
+
 }
