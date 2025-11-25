@@ -1,6 +1,6 @@
 # CONFIG
-$workspaceName = "yanceyd365prodsynapsewksp"
-$resourceGroup = "RESG-D365Production_Int"
+$workspaceName = "prodsynapsewksp"
+$resourceGroup = "RESG-Production_Int"
 $basePath = "C:\SynapseBackup"
 
 # Ensure you're logged in
@@ -33,3 +33,4 @@ foreach ($type in $artifactTypes.Keys) {
         $json | Out-File -FilePath $path -Encoding UTF8
     }
 }
+
