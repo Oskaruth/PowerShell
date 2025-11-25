@@ -1,4 +1,4 @@
-$ReportServerUri = "http://sql4/ReportServer/ReportService2010.asmx?wsdl"
+$ReportServerUri = "http://sqlserver/ReportServer/ReportService2010.asmx?wsdl"
 $ExportRoot  = "C:\Project\SSRS"
 $ReportPath = "/"  # Start at SSRS root
 
@@ -51,3 +51,4 @@ foreach ($item in $items) {
         Write-Warning "Failed to export $($item.TypeName): $($item.Path) - $($_.Exception.Message)"
     }
 }
+
