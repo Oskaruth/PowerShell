@@ -11,8 +11,8 @@ $targetServer = "SQL3"
 $targetDatabase = "D365_PROD"
 $targetTable = "dbo.SynapsePipelineLog"
 
-$emailRecipients = "kevin_wilkie@yanceybros.com"
-$smtpServer = "smtp.yanceybros.com"
+$emailRecipients = "kevin_wilkie@nope.com"
+$smtpServer = "smtp.nope.com"
 
 # 1. Get latest InsertedOn from target
 try {
@@ -72,3 +72,4 @@ if ($newRows.Count -eq 0) {
         $connection.Close()
     }
 }
+
