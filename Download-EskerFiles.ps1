@@ -16,7 +16,7 @@ param(
 # -----------------------------
 # Load file list
 # -----------------------------
-$SiteUrl = "yanceybros.sharepoint.com:/sites/Information_Technology"   # Replace
+$SiteUrl = "goodness.sharepoint.com:/sites/Information_Technology"   # Replace
 $FileListPath = "C:\Project\SQLServerScripts\SharePointFilesToDownload.txt"
 
 if (!(Test-Path $FileListPath)) {
@@ -134,3 +134,4 @@ foreach ($file in $targetFiles) {
 }
 
 Write-Host "All requested files downloaded successfully." -ForegroundColor Green
+
